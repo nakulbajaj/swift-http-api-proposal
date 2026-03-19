@@ -278,6 +278,10 @@ public final class URLSessionHTTPClient: HTTPClient, IdleTimerEntryProvider {
         }
         request.allowsExpensiveNetworkAccess = options.allowsExpensiveNetworkAccess
         request.allowsConstrainedNetworkAccess = options.allowsConstrainedNetworkAccess
+        request.assumesHTTP3Capable = options.assumesHTTP3Capable
+        if let stallTimeout = options.stallTimeout {
+            request.timeoutInterval = stallTimeout / .seconds(1)
+        }
 
         // Disable Content-Type sniffing
         let urlRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
